@@ -5,7 +5,7 @@ let userSchema= mongoose.Schema({
         require:true  //mysql에서 not null같은 기능 여기서는 빈값을 입력할 수 없다.
     },
     password : {
-        type:String&&Number,
+        type:String,
         require:true
     },
     email : {

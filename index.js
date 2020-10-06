@@ -3,9 +3,10 @@ require('dotenv').config()
 //import router from './routers/routes';
 //require('./models/contactModel');
 let apiRouter = require('./routers/routes');
-let path = require('path')
-let express = require('express')
-let bodyParser = require('body-parser') //express설치할때 자동으로 설치됬다.
+let path = require('path');
+let cors = require('cors');
+let express = require('express');
+let bodyParser = require('body-parser'); //express설치할때 자동으로 설치됬다.
 
 let app = express()
 let mongoose = require('mongoose')
@@ -20,6 +21,8 @@ app.use(express.urlencoded({extended:false}))
 
 app.use(bodyParser.json())
 
+app.use(cors());
+
 app.use('/api',apiRouter) 
 //미들웨어 등록할때 쓰는 메소드
 //localhost8000/api 로 요청될때 apiRouter가 실행된다. apiRouter에는 '/', '/signup' url로 받아서 결국 api or api/signup 이다.
@@ -30,6 +33,14 @@ mongoose.connect(mongo_url, {
     useNewUrlParser: true , 
     useUnifiedTopology: true 
     })
+
+let db = mongoose.connection
+
+if(!db){
+    console.log("Error Connecting db")
+} else {
+    console.log("DB Connected Success")
+}
 
 let port =process.env.PORT || 8080;
 
